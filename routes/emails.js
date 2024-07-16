@@ -24,8 +24,11 @@ router.get("/inbox", auth, async (req, res) => {
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }
-    const emails = await Email.find({ recipient: user.email });
-    res.json(emails);
+
+    const receivedEmails = await Email.find({ recipient: user.email });
+    const sentEmails = await Email.find({ sender: user.email });
+
+    res.json({ received: receivedEmails, sent: sentEmails });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
