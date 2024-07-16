@@ -28,6 +28,8 @@ module.exports = async (req, res, next) => {
       return res.status(404).json({ msg: "User not found" });
     }
     req.user.email = user.email;
+    req.user.firstName = user.firstName;
+    req.user.lastName = user.lastName;
     logger.info("User authenticated:", decoded.user);
     next();
   } catch (err) {

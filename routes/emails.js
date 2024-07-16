@@ -9,7 +9,17 @@ router.post("/send", auth, async (req, res) => {
 
   try {
     const sender = req.user.email;
-    const email = new Email({ sender, recipient, subject, message, status });
+    const firstName = req.user.firstName;
+    const lastName = req.user.lastName;
+    const email = new Email({
+      firstName,
+      lastName,
+      sender,
+      recipient,
+      subject,
+      message,
+      status,
+    });
     await email.save();
     res.json(email);
   } catch (err) {
